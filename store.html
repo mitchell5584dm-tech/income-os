@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brevard Local Presence Kit — $29</title>
+  <link rel="stylesheet" href="css/app.css" />
+  <script src="config.js"></script>
+</head>
+<body>
+  <div class="app" style="grid-template-columns:1fr">
+    <main>
+      <p class="muted"><a href="index.html">Income OS</a> · Store</p>
+      <h2>Local Presence Kit</h2>
+      <p class="sub">One-month Google + review + SMS pack for independent shops in Melbourne, Palm Bay, Suntree, Viera, and Cocoa. $29 one time.</p>
+      <div class="card" style="margin:16px 0">
+        <h3>Checkout</h3>
+        <p class="muted" id="payHint">Loading…</p>
+        <div class="row" id="payButtons"></div>
+        <p class="muted">Cards are processed by Stripe, Gumroad, or PayPal — not by this page.</p>
+      </div>
+      <div class="card" id="setupBox" style="display:none">
+        <h3>Checkout is not connected</h3>
+        <p class="muted">Paste a buy.stripe.com or Gumroad URL into config.js. See docs/PAYMENTS.md.</p>
+      </div>
+    </main>
+  </div>
+  <script>
+    const P = window.INCOME_PAY || {};
+    const buttons = [];
+    if (P.stripePack) buttons.push(["Pay $29 with Stripe", P.stripePack, "btn"]);
+    if (P.gumroadPack) buttons.push(["Pay $29 on Gumroad", P.gumroadPack, "btn mint"]);
+    if (P.paypalMe) buttons.push(["PayPal $29", P.paypalMe.replace(/\/$/, "") + "/29", "btn ghost"]);
+    if (P.stripePilot) buttons.push(["Book $99 pilot", P.stripePilot, "btn ghost"]);
+    const box = document.getElementById("payButtons");
+    const hint = document.getElementById("payHint");
+    if (!buttons.length) {
+      hint.textContent = "Checkout links are not live yet.";
+      document.getElementById("setupBox").style.display = "block";
+    } else {
+      hint.textContent = "Pay once. Files release on the next page.";
+      buttons.forEach(([label, href, cls]) => {
+        const a = document.createElement("a");
+        a.href = href; a.className = cls; a.textContent = label;
+        box.appendChild(a);
+      });
+    }
+  </script>
+</body>
+</html>

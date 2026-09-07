@@ -1,26 +1,14 @@
-# Launch
+# Launch Pages
 
-## On your machine
+The Actions error `Get Pages site failed` means Pages is off.
 
-```bash
-chmod +x launch.sh
-./launch.sh
-```
+Do this once:
 
-Then open http://127.0.0.1:8765/
+1. Open https://github.com/mitchell5584dm-tech/income-os/settings/pages
+2. Build and deployment → Source → **GitHub Actions**
+   or Source → **Deploy from a branch** → `main` → `/` (root)
+3. Save
+4. Actions → Deploy GitHub Pages → Run workflow
 
-Or skip the server and double-click `index.html`.
-
-## On the web (free)
-
-Repo: https://github.com/mitchell5584dm-tech/income-os
-
-1. GitHub → Settings → Pages
-2. Source: GitHub Actions
-3. Re-run the **Deploy GitHub Pages** workflow if needed
-
-Public URL after the first successful deploy:
-
-https://mitchell5584dm-tech.github.io/income-os/
-
-Phone: add that URL to your home screen.
+Site: https://mitchell5584dm-tech.github.io/income-os/
+Store: https://mitchell5584dm-tech.github.io/income-os/store.html
