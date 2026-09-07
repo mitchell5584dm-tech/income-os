@@ -1,12 +1,12 @@
 /* Payment endpoints the public store uses.
-   Paste YOUR live links. Stripe is not connected to Grok.
-   Stripe Dashboard → Payment links → After payment → redirect to thanks.html
+   Stripe Payment Link for Brevard Local Presence Kit $29.
+   After payment should redirect to thanks.html?item=pack
 */
 window.INCOME_PAY = {
   ownerName: "David Mitchell",
   ownerEmail: "mitchell5584.dm@gmail.com",
   market: "Melbourne / Brevard County, FL",
-  stripePack: "",
+  stripePack: "https://buy.stripe.com/9B66oGbambgocGY2Nr5sA0g",
   stripePilot: "",
   paypalMe: "",
   gumroadPack: "",
