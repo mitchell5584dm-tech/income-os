@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Income OS — Free AI Operator Console</title>
+  <meta name="description" content="Offline-first income operating system run by Grok or Gemini for free." />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <div class="app">
+    <nav>
+      <div class="brand">
+        <div class="mark">OS</div>
+        <div>
+          <h1>INCOME OS</h1>
+          <p>AI operator console</p>
+        </div>
+      </div>
+      <button class="nav-btn active" data-tab="setup">1. Setup</button>
+      <button class="nav-btn" data-tab="plan">2. Plan</button>
+      <button class="nav-btn" data-tab="offers">3. Offers</button>
+      <button class="nav-btn" data-tab="operator">4. Operator</button>
+      <button class="nav-btn" data-tab="daily">5. Daily</button>
+      <button class="nav-btn" data-tab="pipeline">Pipeline</button>
+      <button class="nav-btn" data-tab="ledger">Ledger</button>
+      <button class="nav-btn" data-tab="content">Content</button>
+      <button class="nav-btn" data-tab="playbooks">Playbooks</button>
+      <button class="nav-btn" data-tab="settings">Settings</button>
+      <div class="goal-chip">
+        <span>This month vs goal</span>
+        <strong id="navEarned">$0</strong>
+        <span id="navGoal">Goal $0</span>
+      </div>
+    </nav>
+    <main>
+      <section id="setup">
+        <div class="top">
+          <div>
+            <h2>Owner setup</h2>
+            <p class="sub">The assistant can only run what it knows. Be concrete. City, skills, hours, and a real number.</p>
+          </div>
+          <button class="btn" id="saveProfile">Save & generate plan</button>
+        </div>
+        <div class="grid g2">
+          <div class="card">
+            <h3>Who you are</h3>
+            <label>Name</label>
+            <input id="pName" placeholder="David" />
+            <label>City / market</label>
+            <input id="pCity" placeholder="Melbourne, FL" />
+            <label>Skills, tools, proof (comma or sentences)</label>
+            <textarea id="pSkills" placeholder="Writing, local business ops, Excel, investigations, customer research..."></textarea>
+            <label>Assets you already have</label>
+            <textarea id="pAssets" placeholder="Laptop, phone, email list of 40 people, a domain, Canva, Grok, Gemini..."></textarea>
+          </div>
+          <div class="card">
+            <h3>Constraints</h3>
+            <label>Monthly net income goal ($)</label>
+            <input id="pGoal" type="number" min="0" step="50" value="2500" />
+            <label>Hours available per week</label>
+            <input id="pHours" type="number" min="1" max="80" value="12" />
+            <label>Starting capital ($)</label>
+            <input id="pCapital" type="number" min="0" value="0" />
+            <label>Preferred path</label>
+            <select id="pPath">
+              <option value="auto">Auto — pick the fastest cash path</option>
+              <option value="services">Productized services first</option>
+              <option value="products">Digital products first</option>
+              <option value="local">Local business retainers</option>
+              <option value="content">Content + affiliate</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+            <label>What you will not do</label>
+            <textarea id="pNo" placeholder="No video on camera, no cold calling, no weekend work..."></textarea>
+          </div>
+        </div>
+      </section>
+      <section id="plan" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Income plan</h2>
+            <p class="sub">Math first. The assistant works this plan; it does not invent a new business every day.</p>
+          </div>
+        </div>
+        <div class="grid g4" id="planStats"></div>
+        <div class="grid g2" style="margin-top:16px">
+          <div class="card" id="planNarrative"></div>
+          <div class="card" id="planWeek"></div>
+        </div>
+      </section>
+      <section id="offers" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Offers</h2>
+            <p class="sub">One flagship. One backup. One product. Sell the flagship until it is ugly and working.</p>
+          </div>
+          <button class="btn ghost" id="regenOffers">Rebuild offers from profile</button>
+        </div>
+        <div class="grid g3" id="offerCards"></div>
+      </section>
+      <section id="operator" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Operator prompts</h2>
+            <p class="sub">Paste the master prompt into Grok or a Gemini Gem once. Use the job prompts daily.</p>
+          </div>
+          <button class="btn" id="copyMaster">Copy master system prompt</button>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <h3>Master system prompt</h3>
+          <div class="prompt" id="masterPrompt"></div>
+        </div>
+        <div class="grid g2" id="jobPrompts"></div>
+      </section>
+      <section id="daily" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Daily brief</h2>
+            <p class="sub" id="dailySub"></p>
+          </div>
+          <button class="btn mint" id="copyDaily">Copy brief to Grok / Gemini</button>
+        </div>
+        <div class="grid g2">
+          <div class="card" id="dailyCard"></div>
+          <div class="card">
+            <h3>Owner checklist</h3>
+            <div id="dailyChecks"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3>Brief to paste</h3>
+          <div class="prompt" id="dailyPrompt"></div>
+        </div>
+      </section>
+      <section id="pipeline" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Pipeline</h2>
+            <p class="sub">If it is not in here, it does not exist. Move cards as conversations move.</p>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="grid g3">
+            <div>
+              <label>Who</label>
+              <input id="dWho" placeholder="Palm Bay HVAC / Jane at Coastal Dental" />
+            </div>
+            <div>
+              <label>Offer / value</label>
+              <input id="dOffer" placeholder="Google review replies + monthly posts — $299" />
+            </div>
+            <div>
+              <label>Stage</label>
+              <select id="dStage">
+                <option>Lead</option>
+                <option>Pitched</option>
+                <option>Won</option>
+                <option>Delivering</option>
+                <option>Paid</option>
+              </select>
+            </div>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn" id="addDeal">Add deal</button>
+          </div>
+        </div>
+        <div class="kanban" id="kanban"></div>
+      </section>
+      <section id="ledger" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Ledger</h2>
+            <p class="sub">Cash collected this calendar month against the goal. Estimates do not count.</p>
+          </div>
+        </div>
+        <div class="grid g3" id="ledgerStats"></div>
+        <div class="card" style="margin:16px 0">
+          <div class="grid g3">
+            <div>
+              <label>Source</label>
+              <input id="iSource" placeholder="Coastal Dental retainer" />
+            </div>
+            <div>
+              <label>Amount ($)</label>
+              <input id="iAmt" type="number" min="0" step="1" />
+            </div>
+            <div>
+              <label>Date</label>
+              <input id="iDate" type="date" />
+            </div>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn mint" id="addIncome">Log payment</button>
+          </div>
+        </div>
+        <div class="card">
+          <table>
+            <thead><tr><th>Date</th><th>Source</th><th>Amount</th><th></th></tr></thead>
+            <tbody id="incomeRows"></tbody>
+          </table>
+        </div>
+      </section>
+      <section id="content" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Content queue</h2>
+            <p class="sub">Content exists to sell the offer. If a post cannot name the buyer and the offer, cut it.</p>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom:16px">
+          <div class="grid g2">
+            <div>
+              <label>Idea</label>
+              <input id="cIdea" placeholder="3 Google Business posts a HVAC owner can reuse this week" />
+            </div>
+            <div>
+              <label>Channel</label>
+              <select id="cChan">
+                <option>LinkedIn</option>
+                <option>Facebook Group</option>
+                <option>X</option>
+                <option>Email</option>
+                <option>YouTube / short</option>
+                <option>Nextdoor</option>
+              </select>
+            </div>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn" id="addContent">Queue item</button>
+            <button class="btn ghost" id="copyContentPrompt">Copy write-the-queue prompt</button>
+          </div>
+        </div>
+        <div class="card">
+          <table>
+            <thead><tr><th>Channel</th><th>Idea</th><th>Status</th><th></th></tr></thead>
+            <tbody id="contentRows"></tbody>
+          </table>
+        </div>
+      </section>
+      <section id="playbooks" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Playbooks</h2>
+            <p class="sub">Proven $0-start motions the operator should execute, not admire.</p>
+          </div>
+        </div>
+        <div class="grid g2" id="playGrid"></div>
+      </section>
+      <section id="settings" class="hidden">
+        <div class="top">
+          <div>
+            <h2>Settings</h2>
+            <p class="sub">Data never leaves this browser unless you export it.</p>
+          </div>
+        </div>
+        <div class="card">
+          <p class="muted">Income OS stores profile, pipeline, ledger, and content in localStorage.</p>
+          <div class="row">
+            <button class="btn" id="exportBtn">Export JSON backup</button>
+            <button class="btn ghost" id="importBtn">Import backup</button>
+            <button class="btn rose" id="wipeBtn">Wipe all data</button>
+          </div>
+          <input id="importFile" type="file" accept="application/json" class="hidden" />
+          <p class="muted" style="margin-top:16px">Free runtime: Grok and Gemini chats. Free storefront: Gumroad. Free hosting: this file or GitHub Pages.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast">Copied</div>
+  <script src="js/app.js"></script>
+</body>
+</html>
