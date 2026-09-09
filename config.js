@@ -3,7 +3,7 @@
    After payment should redirect to thanks.html?item=pack
 */
 window.INCOME_PAY = {
-  ownerName: "RetireSec Workbench",
+  ownerName: "Arcana Forensics",
   ownerEmail: "retiresecworkbench@gmail.com",
   market: "Melbourne / Brevard County, FL",
   stripePack: "https://buy.stripe.com/9B66oGbambgocGY2Nr5sA0g",
